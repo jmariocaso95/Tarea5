@@ -1,0 +1,107 @@
+plugins {
+
+    id 'java'
+
+    id 'org.springframework.boot' version '3.3.4'
+
+    id 'io.spring.dependency-management' version '1.1.6'
+
+}
+
+
+
+group = 'com.taller'
+
+version = '1.0.0'
+
+
+
+java {
+
+    toolchain {
+
+        languageVersion = JavaLanguageVersion.of(17)
+
+    }
+
+}
+
+
+
+configurations {
+
+    compileOnly {
+
+        extendsFrom annotationProcessor
+
+    }
+
+}
+
+
+
+repositories {
+
+    mavenCentral()
+
+}
+
+
+
+dependencies {
+
+    // --- Core WebFlux (Reactivo) ---
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+
+
+    // --- Base de datos en memoria (H2 con R2DBC para reactividad) ---
+
+    runtimeOnly 'com.h2database:h2'
+
+    runtimeOnly 'io.r2dbc:r2dbc-h2'
+
+    runtimeOnly 'io.r2dbc:r2dbc-pool'
+
+
+
+    // --- Lombok (menos boilerplate) ---
+
+    compileOnly 'org.projectlombok:lombok'
+
+    annotationProcessor 'org.projectlombok:lombok'
+
+
+
+    // --- Procesador para @ConfigurationProperties ---
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+
+
+    // --- Pruebas ---
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+}
+
+
+
+tasks.named('test') {
+
+    useJUnitPlatform()
+
+    testLogging {
+
+        events 'passed', 'failed', 'skipped'
+
+    }
+
+}
